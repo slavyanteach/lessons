@@ -1,1 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Русский язык с Александром</title>
+<link href="https://fonts.googleapis.com/css2?family=Days+One&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --vtb-cyan:#00B4FF;--vtb-sky:#64CFFF;--ru-red:#D4213D;
+  --fb-orange:#F97718;--ans-green:#84e3c8;--sub-color:#758592;
+  --glass-border:rgba(255,255,255,0.22);
+  --glass-shadow:0 2px 0 rgba(255,255,255,0.20) inset,0 -1px 0 rgba(0,0,40,0.15) inset,0 12px 40px rgba(0,20,80,0.28),0 2px 8px rgba(0,0,0,0.18);
+  --radius:18px;--radius-sm:11px;--text:#E8F4FF;--text-dim:rgba(180,215,255,0.58);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;
+  background:radial-gradient(ellipse 80% 60% at 15% 40%,rgba(41,121,255,0.55) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 65%,rgba(0,180,255,0.30) 0%,transparent 55%),
+    linear-gradient(145deg,#0D47A1 0%,#1565C0 30%,#0A2896 55%,#1976D2 100%);
+  background-attachment:fixed;}
 
+/* ═══ HEADER ═══ */
+.header{position:relative;overflow:hidden;height:190px;}
+.header-bg{position:absolute;inset:0;z-index:0;
+  background:linear-gradient(135deg,rgba(6,28,105,0.98) 0%,rgba(11,60,145,0.95) 50%,rgba(8,42,130,0.97) 100%);}
+.header-ornament{position:absolute;inset:0;z-index:1;width:100%;height:100%;}
+
+.header-grid{position:relative;z-index:5;height:190px;display:flex;align-items:center;}
+.header-left{padding:1.2rem 1.5rem 1.2rem 1.8rem;width:37.5%;flex-shrink:0;}
+.header-card{
+  background:rgba(6,22,90,0.60);border:1px solid rgba(120,180,255,0.30);border-radius:var(--radius);
+  backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+  box-shadow:0 2px 0 rgba(150,200,255,0.18) inset,0 -1px 0 rgba(0,0,40,0.15) inset,0 16px 48px rgba(0,20,80,0.32);
+  padding:1rem 1.2rem;width:100%;position:relative;overflow:hidden;}
+.header-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(150,210,255,.45),transparent);}
+
+.h-title{font-family:'Days One',sans-serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:400;
+  line-height:1.25;color:#fff;letter-spacing:.02em;margin-bottom:.3rem;
+  text-shadow:0 0 24px rgba(0,180,255,0.55),0 2px 4px rgba(0,0,0,0.5);}
+.h-title span{color:var(--vtb-sky);}
+.h-subtitle{font-size:11px;color:var(--text-dim);margin-bottom:.7rem;}
+.h-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.h-badge{font-size:10.5px;font-weight:500;padding:3px 12px;border-radius:100px;
+  background:rgba(0,180,255,0.12);color:var(--vtb-sky);border:1px solid rgba(0,180,255,0.32);}
+
+.shimmer{height:1px;background:linear-gradient(90deg,transparent,rgba(0,180,255,.5),#fff,rgba(0,180,255,.5),transparent);}
+
+/* ═══ TABS ═══ */
+.tab-nav{position:sticky;top:0;z-index:99;border-bottom:1px solid rgba(255,255,255,0.14);
+  display:flex;flex-direction:column;box-shadow:0 6px 24px rgba(0,20,100,0.35);overflow:hidden;}
+.tab-nav-bg{position:absolute;inset:0;z-index:0;background:rgba(8,35,130,0.72);
+  backdrop-filter:blur(32px) saturate(200%);-webkit-backdrop-filter:blur(32px) saturate(200%);}
+.tricolour{display:flex;height:4px;position:relative;z-index:3;flex-shrink:0;}
+.tricolour span{flex:1;}.tc-w{background:#FFFFFF;}.tc-b{background:#1565C0;}.tc-r{background:#D4213D;}
+.tab-nav-pattern{position:absolute;inset:0;z-index:1;width:100%;height:100%;}
+.tab-buttons{display:flex;position:relative;z-index:2;}
+.tab-btn{flex:1;font-family:'Days One',sans-serif;font-size:clamp(13px,1.8vw,20px);font-weight:400;
+  padding:1rem .5rem;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;
+  cursor:pointer;color:rgba(180,215,255,0.70);transition:all .22s;text-align:center;}
+.tab-btn .tr{display:inline-block;padding:4px 16px;border:1px solid transparent;border-radius:100px;transition:all .22s;}
+.tab-btn .te{display:block;font-size:clamp(9px,1vw,11px);opacity:.52;margin-top:3px;font-family:'Inter',sans-serif;}
+.tab-btn:hover{color:var(--vtb-sky);}
+.tab-btn:hover .tr{border-color:rgba(0,180,255,0.30);background:rgba(0,180,255,0.07);}
+.tab-btn.active{color:#fff;border-bottom-color:var(--vtb-cyan);text-shadow:0 0 10px rgba(0,180,255,.5);}
+.tab-btn.active .tr{border-color:rgba(0,180,255,0.50);background:rgba(0,180,255,0.12);box-shadow:0 0 10px rgba(0,180,255,0.20);}
+
+/* ═══ MAIN ═══ */
+main{max-width:860px;margin:0 auto;padding:2rem 1.25rem 5rem;}
+.section{display:none;animation:fadeUp .3s ease;}.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.sec-label{display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;}
+.sec-label h2{font-family:'Days One',sans-serif;font-size:18px;font-weight:400;color:#fff;
+  letter-spacing:.02em;text-shadow:0 0 14px rgba(0,180,255,.35);}
+.sec-label .pill{font-size:10.5px;font-weight:500;padding:4px 14px;border-radius:100px;
+  background:rgba(0,180,255,.12);color:var(--vtb-sky);border:1px solid rgba(0,180,255,.26);font-family:'Inter',sans-serif;}
+
+.g-card{position:relative;background:rgba(255,255,255,0.09);border:1px solid var(--glass-border);
+  border-radius:var(--radius);backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:var(--glass-shadow);overflow:hidden;}
+.g-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);pointer-events:none;}
+.g-card.blue-strip::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--vtb-cyan),#1565C0);border-radius:3px 0 0 3px;}
+.g-card.yellow-strip::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,#FFD700,#F97718);border-radius:3px 0 0 3px;}
+.g-card.ans-strip::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,#84e3c8,#00C2A8);border-radius:3px 0 0 3px;}
+
+.text-card{margin-bottom:1.8rem;padding:1.4rem 1.6rem;line-height:2;font-size:14.5px;}
+.text-card p{margin-bottom:1rem;}.text-card p:last-child{margin-bottom:0;}
+.text-card em{font-style:normal;color:var(--vtb-cyan);font-weight:600;}
+
+.word-card{margin-bottom:1.4rem;}
+.word-head{display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem 1rem 1.5rem;
+  background:linear-gradient(90deg,rgba(0,50,150,0.60),rgba(0,80,200,0.30),transparent);
+  border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap;}
+.word-ru{font-family:'Inter',sans-serif;font-size:22px;font-weight:600;color:#fff;text-shadow:0 0 14px rgba(0,180,255,.38);}
+.word-en{font-size:13px;color:var(--vtb-sky);margin-top:2px;}
+.word-tag{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;
+  border-radius:100px;background:rgba(0,180,255,.12);color:var(--vtb-sky);
+  border:1px solid rgba(0,180,255,.22);margin-left:auto;}
+
+.seg{padding:.82rem 1.4rem .82rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px;line-height:1.7;}
+.seg:last-child{border-bottom:none;}
+.seg-label{display:inline-block;font-family:'Days One',sans-serif;font-size:11px;
+  color:var(--vtb-sky);margin-bottom:8px;padding:3px 16px;
+  border:1px solid rgba(0,180,255,0.35);border-radius:100px;
+  background:rgba(0,180,255,0.10);box-shadow:0 1px 0 rgba(255,255,255,.08) inset;}
+.seg-content{color:var(--text);}
+.seg-content em{font-style:italic;color:rgba(155,221,252,.85);}
+.seg-content strong{color:var(--vtb-sky);}
+
+.decl-wrap{overflow-x:auto;margin-top:4px;}
+table.decl{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.decl th{background:rgba(0,180,255,.10);color:var(--vtb-sky);font-weight:600;font-size:11px;
+  letter-spacing:.06em;padding:7px 10px;text-align:left;border:1px solid rgba(255,255,255,.07);font-family:'Inter',sans-serif;}
+table.decl th.form-header{background:rgba(0,180,255,.07);color:rgba(100,207,255,.75);font-size:10.5px;}
+table.decl td{padding:7px 10px;border:1px solid rgba(255,255,255,.05);color:var(--text);vertical-align:top;}
+table.decl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.case-ru{font-weight:600;color:#fff;display:block;line-height:1.4;}
+.case-en-sub{font-size:10.5px;color:var(--text-dim);display:block;line-height:1.3;margin-top:1px;}
+.q-words{font-style:italic;color:var(--vtb-sky);display:block;line-height:1.4;}
+.q-words-en{font-size:10.5px;color:var(--text-dim);display:block;line-height:1.3;margin-top:1px;}
+.form-cell{color:var(--text);font-size:13.5px;}
+
+.phrase-card{margin-bottom:1.1rem;}
+.phrase-head{display:flex;align-items:center;gap:.75rem;padding:.9rem 1.4rem .9rem 1.5rem;
+  background:linear-gradient(90deg,rgba(0,50,150,0.60),rgba(0,80,200,0.30),transparent);
+  border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap;}
+.phrase-ru{font-family:'Inter',sans-serif;font-size:18px;font-weight:600;color:#fff;}
+.phrase-en{font-size:12px;color:var(--vtb-sky);}
+.phrase-type{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:100px;background:rgba(255,180,0,.15);color:#FFD700;border:1px solid rgba(255,180,0,.35);}
+
+.ex-card{margin-bottom:1.3rem;}
+.ex-head{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.4rem;
+  background:linear-gradient(90deg,rgba(0,50,160,0.75),rgba(0,80,200,0.45));
+  border-bottom:1px solid rgba(255,255,255,.08);color:#fff;}
+.ex-num{width:27px;height:27px;border-radius:50%;background:rgba(0,180,255,.18);
+  border:1px solid rgba(0,180,255,.4);display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;color:var(--vtb-cyan);}
+.ex-title{font-family:'Days One',sans-serif;font-size:14px;font-weight:400;}
+.ex-title .ex-en{font-family:'Inter',sans-serif;font-size:11px;opacity:.60;margin-left:6px;}
+.ex-body{padding:1.15rem 1.4rem;font-size:14px;line-height:1.9;}
+.ex-body ol{padding-left:1.25rem;}.ex-body li{margin-bottom:.5rem;}
+.blank{display:inline-block;min-width:80px;border-bottom:1.5px solid var(--vtb-cyan);margin:0 4px;}
+
+/* Grammar topic — ans-green colour matching Ответы/Упражнение 1 head */
+.grammar-topic{margin-bottom:1.4rem;padding:1rem 1.4rem;font-size:13.5px;line-height:1.7;}
+.grammar-topic strong.t{color:#84e3c8;}
+.grammar-topic em.ex{color:rgba(132,227,200,0.80);font-style:italic;}
+.grammar-topic strong.r{color:#84e3c8;}
+
+.ans-card{margin-bottom:1.3rem;}
+.ans-head{padding:.85rem 1.4rem .85rem 1.5rem;
+  background:linear-gradient(90deg,rgba(10,80,60,0.60),transparent);
+  border-bottom:1px solid rgba(132,227,200,0.15);color:#84e3c8;
+  font-family:'Days One',sans-serif;font-size:14px;font-weight:400;}
+.ans-body{padding:1.15rem 1.4rem 1.15rem 1.5rem;font-size:14px;line-height:1.9;}
+.ans-body ol{padding-left:1.25rem;}.ans-body li{margin-bottom:.4rem;}
+.ans-yes{color:#84e3c8;font-weight:600;}
+.ans-no{color:var(--sub-color);font-weight:600;}
+.ans-dim{color:var(--text-dim);font-size:12px;}
+
+.q-block{margin-bottom:1.6rem;}
+.q-title{font-family:'Days One',sans-serif;font-size:15px;font-weight:400;color:#fff;
+  margin-bottom:.7rem;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08);}
+.q-item{position:relative;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.20);
+  border-radius:var(--radius-sm);backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 rgba(255,255,255,0.18) inset,0 6px 20px rgba(0,20,100,0.22);
+  padding:.82rem 1.2rem;margin-bottom:.55rem;font-size:14px;line-height:1.6;}
+
+footer{text-align:center;padding:1.8rem;font-size:12px;color:var(--text-dim);border-top:1px solid rgba(255,255,255,.07);}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-bg"></div>
+
+  <!-- ══ GZHEL ORNAMENT SVG ══
+       Palette: cobalt blue (#1A3DA8) on deep navy, with white accents.
+       Gzhel = cobalt-blue floral motifs on white/light ground;
+       here we invert for dark background: light-blue/white strokes on deep navy. -->
+  <svg class="header-ornament" xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 1200 190" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <!-- Gzhel colour vars: bright cobalt, mid-blue, white, pale-blue -->
+      <style>
+        .gz-cobalt  { stroke:#5B9BD5; fill:none; }          /* lighter cobalt for dark bg */
+        .gz-mid     { stroke:#7AB8E8; fill:none; }           /* mid sky-blue */
+        .gz-white   { stroke:rgba(255,255,255,0.55); fill:none; }
+        .gz-pale    { stroke:rgba(140,200,255,0.40); fill:none; }
+        .gf-cobalt  { fill:rgba(91,155,213,0.22); stroke:none; }
+        .gf-mid     { fill:rgba(122,184,232,0.18); stroke:none; }
+        .gf-white   { fill:rgba(255,255,255,0.10); stroke:none; }
+        .gf-deep    { fill:rgba(26,61,168,0.35);   stroke:none; }
+      </style>
+
+      <filter id="gz-glow">
+        <feGaussianBlur stdDeviation="2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="gz-soft">
+        <feGaussianBlur stdDeviation="1" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+
+      <!-- GZHEL ROSE (full bloom) — 5 petals around a circle -->
+      <g id="gz-rose">
+        <!-- Petals -->
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gf-cobalt"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gz-cobalt" stroke-width="1.2"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gf-cobalt" transform="rotate(72)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gz-cobalt" stroke-width="1.2" transform="rotate(72)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gf-mid" transform="rotate(144)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gz-mid" stroke-width="1.0" transform="rotate(144)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gf-cobalt" transform="rotate(216)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gz-cobalt" stroke-width="1.2" transform="rotate(216)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gf-mid" transform="rotate(288)"/>
+        <path d="M 0 -24 C -10 -34 -18 -30 -14 -18 C -10 -8 -4 -6 0 -6 C 4 -6 10 -8 14 -18 C 18 -30 10 -34 0 -24 Z"
+              class="gz-mid" stroke-width="1.0" transform="rotate(288)"/>
+        <!-- Sepal-like inner petals -->
+        <path d="M 0 -12 C -5 -18 5 -18 0 -12 Z" class="gz-white" stroke-width="0.7"/>
+        <path d="M 0 -12 C -5 -18 5 -18 0 -12 Z" class="gz-white" stroke-width="0.7" transform="rotate(72)"/>
+        <path d="M 0 -12 C -5 -18 5 -18 0 -12 Z" class="gz-white" stroke-width="0.7" transform="rotate(144)"/>
+        <path d="M 0 -12 C -5 -18 5 -18 0 -12 Z" class="gz-white" stroke-width="0.7" transform="rotate(216)"/>
+        <path d="M 0 -12 C -5 -18 5 -18 0 -12 Z" class="gz-white" stroke-width="0.7" transform="rotate(288)"/>
+        <!-- Centre -->
+        <circle r="7" class="gf-deep"/>
+        <circle r="7" class="gz-cobalt" stroke-width="1.2"/>
+        <circle r="3.5" fill="rgba(122,184,232,0.60)"/>
+        <circle r="1.5" fill="rgba(255,255,255,0.75)"/>
+      </g>
+
+      <!-- SMALL BUD -->
+      <g id="gz-bud">
+        <path d="M 0 0 C -5 -12 5 -12 0 0 Z" class="gf-cobalt"/>
+        <path d="M 0 0 C -5 -12 5 -12 0 0 Z" class="gz-cobalt" stroke-width="1.0"/>
+        <path d="M -3 -4 C -3 -10 3 -10 3 -4" class="gz-white" stroke-width="0.6"/>
+        <circle cx="0" cy="-12" r="2" class="gf-mid"/>
+        <circle cx="0" cy="-12" r="2" class="gz-mid" stroke-width="0.8"/>
+      </g>
+
+      <!-- GZHEL LEAF -->
+      <g id="gz-leaf">
+        <path d="M 0 0 C -8 -10 -6 -22 0 -26 C 6 -22 8 -10 0 0 Z" class="gf-mid"/>
+        <path d="M 0 0 C -8 -10 -6 -22 0 -26 C 6 -22 8 -10 0 0 Z" class="gz-mid" stroke-width="1.0"/>
+        <path d="M 0 0 L 0 -26" class="gz-white" stroke-width="0.5"/>
+        <path d="M -4 -10 C -2 -12 2 -12 4 -10" class="gz-white" stroke-width="0.5"/>
+      </g>
+
+      <!-- GZHEL SCROLL VINE segment -->
+      <g id="gz-scroll">
+        <path d="M 0 0 C 20 -8 35 -5 45 -18 C 55 -30 45 -42 30 -38 C 18 -35 15 -24 22 -18 C 28 -13 36 -16 34 -24"
+              class="gz-cobalt" stroke-width="1.5"/>
+        <path d="M 45 -18 C 55 -10 70 -8 80 -18 C 90 -28 85 -42 72 -40 C 60 -38 58 -28 64 -22 C 68 -17 76 -20 74 -28"
+              class="gz-mid" stroke-width="1.3"/>
+        <!-- Leaves on scroll -->
+        <use href="#gz-leaf" transform="translate(22,-18) rotate(-30)" opacity="0.8"/>
+        <use href="#gz-leaf" transform="translate(64,-22) rotate(20)" opacity="0.7"/>
+        <!-- Buds on scroll -->
+        <use href="#gz-bud" transform="translate(34,-24) rotate(-20)" opacity="0.9"/>
+        <use href="#gz-bud" transform="translate(74,-28) rotate(15)" opacity="0.8"/>
+      </g>
+
+    </defs>
+
+    <!-- ════════════════════════════════════
+         GZHEL COMPOSITION
+    ════════════════════════════════════ -->
+
+    <!-- ── TOP SCROLL BAND ── -->
+    <g opacity="0.72" filter="url(#gz-soft)">
+      <!-- Continuous vine along top -->
+      <path d="M -10 28 C 30 12 70 32 110 18 C 150 5 190 28 230 18 C 270 8 310 26 350 16 C 390 6 430 28 470 18 C 510 8 550 28 590 16 C 630 5 670 26 710 18 C 750 8 790 28 830 18 C 870 8 910 26 950 16 C 990 6 1030 28 1070 18 C 1110 8 1150 22 1210 18"
+            class="gz-cobalt" stroke-width="1.4" opacity="0.65"/>
+      <!-- Upper dotted accent -->
+      <path d="M -10 18 C 30 6 70 22 110 10 C 150 -2 190 18 230 8 C 270 -2 310 16 350 6 C 390 -4 430 18 470 8 C 510 -2 550 18 590 8 C 630 -2 670 16 710 8 C 750 -2 790 18 830 8 C 870 -2 910 16 950 8 C 990 -2 1030 18 1070 8 C 1110 -2 1150 12 1210 8"
+            class="gz-pale" stroke-width="0.8" opacity="0.50"/>
+    </g>
+
+    <!-- ── BOTTOM SCROLL BAND ── -->
+    <g opacity="0.72" filter="url(#gz-soft)" transform="translate(0,190) scale(1,-1)">
+      <path d="M -10 28 C 30 12 70 32 110 18 C 150 5 190 28 230 18 C 270 8 310 26 350 16 C 390 6 430 28 470 18 C 510 8 550 28 590 16 C 630 5 670 26 710 18 C 750 8 790 28 830 18 C 870 8 910 26 950 16 C 990 6 1030 28 1070 18 C 1110 8 1150 22 1210 18"
+            class="gz-cobalt" stroke-width="1.4" opacity="0.65"/>
+      <path d="M -10 18 C 30 6 70 22 110 10 C 150 -2 190 18 230 8 C 270 -2 310 16 350 6 C 390 -4 430 18 470 8 C 510 -2 550 18 590 8 C 630 -2 670 16 710 8 C 750 -2 790 18 830 8 C 870 -2 910 16 950 8 C 990 -2 1030 18 1070 8 C 1110 -2 1150 12 1210 8"
+            class="gz-pale" stroke-width="0.8" opacity="0.50"/>
+    </g>
+
+    <!-- ── SCROLL VINE SECTIONS (mid band) ── -->
+    <g opacity="0.60" filter="url(#gz-soft)">
+      <use href="#gz-scroll" transform="translate(460,120)"/>
+      <use href="#gz-scroll" transform="translate(680,65)"/>
+      <use href="#gz-scroll" transform="translate(900,115)"/>
+      <use href="#gz-scroll" transform="translate(240,68) scale(-1,1)"/>
+      <use href="#gz-scroll" transform="translate(1130,70) scale(-1,1)"/>
+    </g>
+
+    <!-- ── LARGE CENTRE ROSE ── -->
+    <use href="#gz-rose" transform="translate(600,95) scale(1.5)"
+         opacity="0.82" filter="url(#gz-glow)"/>
+
+    <!-- ── MEDIUM ROSES ── -->
+    <use href="#gz-rose" transform="translate(200,95)"   opacity="0.65" filter="url(#gz-soft)"/>
+    <use href="#gz-rose" transform="translate(1000,95)"  opacity="0.65" filter="url(#gz-soft)"/>
+
+    <!-- ── SMALL ROSES ── -->
+    <use href="#gz-rose" transform="translate(400,60)  scale(0.70)" opacity="0.52"/>
+    <use href="#gz-rose" transform="translate(800,60)  scale(0.70)" opacity="0.52"/>
+    <use href="#gz-rose" transform="translate(400,135) scale(0.70)" opacity="0.48"/>
+    <use href="#gz-rose" transform="translate(800,135) scale(0.70)" opacity="0.48"/>
+    <use href="#gz-rose" transform="translate(100,50)  scale(0.55)" opacity="0.40"/>
+    <use href="#gz-rose" transform="translate(1100,50) scale(0.55)" opacity="0.40"/>
+    <use href="#gz-rose" transform="translate(100,145) scale(0.55)" opacity="0.38"/>
+    <use href="#gz-rose" transform="translate(1100,145) scale(0.55)" opacity="0.38"/>
+
+    <!-- ── STANDALONE BUDS scattered ── -->
+    <use href="#gz-bud"  transform="translate(310,45)  scale(1.2)" opacity="0.55"/>
+    <use href="#gz-bud"  transform="translate(890,45)  scale(1.2)" opacity="0.55"/>
+    <use href="#gz-bud"  transform="translate(310,150) scale(1.2)" opacity="0.50"/>
+    <use href="#gz-bud"  transform="translate(890,150) scale(1.2)" opacity="0.50"/>
+    <use href="#gz-bud"  transform="translate(500,25)  rotate(-20)" opacity="0.48"/>
+    <use href="#gz-bud"  transform="translate(700,25)  rotate(20)"  opacity="0.48"/>
+    <use href="#gz-bud"  transform="translate(500,168) rotate(20)"  opacity="0.44"/>
+    <use href="#gz-bud"  transform="translate(700,168) rotate(-20)" opacity="0.44"/>
+
+    <!-- ── LEAVES scattered ── -->
+    <use href="#gz-leaf" transform="translate(345,52)  rotate(-45)" opacity="0.50"/>
+    <use href="#gz-leaf" transform="translate(855,52)  rotate(45)"  opacity="0.50"/>
+    <use href="#gz-leaf" transform="translate(345,148) rotate(45)"  opacity="0.44"/>
+    <use href="#gz-leaf" transform="translate(855,148) rotate(-45)" opacity="0.44"/>
+    <use href="#gz-leaf" transform="translate(145,90)  rotate(-60)" opacity="0.38"/>
+    <use href="#gz-leaf" transform="translate(1055,90) rotate(60)"  opacity="0.38"/>
+
+    <!-- ── HORIZONTAL THIN RULE LINES ── -->
+    <line x1="0" y1="38"  x2="1200" y2="38"  stroke="rgba(91,155,213,0.28)" stroke-width="0.8"/>
+    <line x1="0" y1="42"  x2="1200" y2="42"  stroke="rgba(255,255,255,0.10)" stroke-width="0.5"/>
+    <line x1="0" y1="148" x2="1200" y2="148" stroke="rgba(91,155,213,0.28)" stroke-width="0.8"/>
+    <line x1="0" y1="152" x2="1200" y2="152" stroke="rgba(255,255,255,0.10)" stroke-width="0.5"/>
+
+    <!-- ── SUBTLE DOTS along vine path ── -->
+    <g fill="rgba(122,184,232,0.50)">
+      <circle cx="55"  cy="20" r="1.8"/>
+      <circle cx="165" cy="26" r="1.5"/>
+      <circle cx="275" cy="20" r="1.8"/>
+      <circle cx="385" cy="24" r="1.5"/>
+      <circle cx="495" cy="20" r="1.8"/>
+      <circle cx="605" cy="24" r="1.5"/>
+      <circle cx="715" cy="20" r="1.8"/>
+      <circle cx="825" cy="24" r="1.5"/>
+      <circle cx="935" cy="20" r="1.8"/>
+      <circle cx="1045" cy="24" r="1.5"/>
+      <circle cx="1155" cy="20" r="1.8"/>
+    </g>
+    <g fill="rgba(122,184,232,0.44)">
+      <circle cx="55"  cy="170" r="1.8"/>
+      <circle cx="165" cy="165" r="1.5"/>
+      <circle cx="275" cy="170" r="1.8"/>
+      <circle cx="385" cy="166" r="1.5"/>
+      <circle cx="495" cy="170" r="1.8"/>
+      <circle cx="715" cy="170" r="1.8"/>
+      <circle cx="825" cy="166" r="1.5"/>
+      <circle cx="935" cy="170" r="1.8"/>
+      <circle cx="1045" cy="166" r="1.5"/>
+      <circle cx="1155" cy="170" r="1.8"/>
+    </g>
+
+    <!-- ── VIGNETTE: fade edges so card area reads clearly ── -->
+    <defs>
+      <linearGradient id="vg" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="rgba(6,22,100,0.95)"/>
+        <stop offset="32%"  stop-color="rgba(6,22,100,0.00)"/>
+        <stop offset="68%"  stop-color="rgba(6,22,100,0.00)"/>
+        <stop offset="100%" stop-color="rgba(6,22,100,0.60)"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="190" fill="url(#vg)"/>
+  </svg>
+
+  <div class="header-grid">
+    <div class="header-left">
+      <div class="header-card">
+        <div class="h-title">Русский язык<br><span>с Александром</span></div>
+        <div class="h-subtitle">Студент: Nina Andrew</div>
+        <div class="h-badges"><span class="h-badge">📖 Чехов · A2</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shimmer"></div>
+
+<!-- ═══ TABS ═══ -->
+<nav class="tab-nav">
+  <div class="tricolour"><span class="tc-w"></span><span class="tc-b"></span><span class="tc-r"></span></div>
+  <div class="tab-nav-bg"></div>
+  <svg class="tab-nav-pattern" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 56" preserveAspectRatio="xMidYMid slice">
+    <defs><style>.op{fill:none;stroke-linecap:round;}.op1{stroke:rgba(100,207,255,0.18);stroke-width:1.4;}.op2{stroke:rgba(212,33,61,0.16);stroke-width:1.2;}.op3{stroke:rgba(255,255,255,0.10);stroke-width:1.0;}.of1{fill:rgba(100,207,255,0.12);}.of2{fill:rgba(212,33,61,0.10);}.of3{fill:rgba(255,255,255,0.08);}</style></defs>
+    <g id="ot"><path class="op op1" d="M 20 30 C 28 20 36 16 44 20 C 50 24 52 32 48 38 C 44 44 36 44 30 39 C 24 34 26 26 32 23"/><path class="op op2" d="M 60 30 C 68 20 76 16 84 20 C 90 24 92 32 88 38 C 84 44 76 44 70 39 C 64 34 66 26 72 23"/><path class="op op1" d="M 100 30 C 108 20 116 16 124 20 C 130 24 132 32 128 38 C 124 44 116 44 110 39 C 104 34 106 26 112 23"/><path class="op op3" d="M 44 30 C 52 30 56 30 60 30"/><path class="op op3" d="M 84 30 C 88 30 96 30 100 30"/><ellipse class="of1" cx="52" cy="26" rx="4" ry="2.5" transform="rotate(-30 52 26)"/><ellipse class="of2" cx="92" cy="26" rx="4" ry="2.5" transform="rotate(30 92 26)"/><circle class="of3" cx="20" cy="30" r="2"/><circle class="of1" cx="60" cy="30" r="2"/><circle class="of2" cx="100" cy="30" r="2"/></g>
+    <use href="#ot" x="0"/><use href="#ot" x="120"/><use href="#ot" x="240"/><use href="#ot" x="360"/><use href="#ot" x="480"/><use href="#ot" x="600"/><use href="#ot" x="720"/><use href="#ot" x="840"/><use href="#ot" x="960"/><use href="#ot" x="1080"/>
+  </svg>
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="show('words',this)"><span class="tr">📚 Слова</span><span class="te">Vocabulary</span></button>
+    <button class="tab-btn" onclick="show('phrases',this)"><span class="tr">💬 Фразы</span><span class="te">Phrases</span></button>
+    <button class="tab-btn" onclick="show('hw',this)"><span class="tr">📝 Задания</span><span class="te">Homework</span></button>
+    <button class="tab-btn" onclick="show('answers',this)"><span class="tr">✅ Ответы</span><span class="te">Answers</span></button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ════ TAB 1 — СЛОВА ════ -->
+<div id="words" class="section active">
+  <div style="margin-bottom:1.5rem;">
+    <div class="sec-label"><h2>Текст урока</h2><span class="pill">Text</span></div>
+    <div class="g-card blue-strip text-card">
+      <p>Суде́бный <em>сле́дователь</em> Серге́й Петро́вич Зино́вьев спал по́сле обе́да. Его́ <em>разбуди́л</em> <em>попуга́й</em>, кото́рый почему́-то крича́л: «Муж уби́л свою́ жену́!»</p>
+      <p>Э́то бы́ло письмо́ от <em>гра́фа</em> Карне́ева. Полика́рп был совсе́м не рад, потому́ что зна́л, что его́ <em>хозя́ин</em> опя́ть бу́дет пить во́дку с гра́фом.</p>
+      <p>Серге́й понима́л, что лу́чше всего́ <em>отказа́ться</em> от э́той дру́жбы. Но он <em>вспо́мнил</em> прекра́сный сад, прохла́дные <em>оранжере́и</em>…</p>
+    </div>
+  </div>
+
+  <div class="sec-label"><h2>Слово урока</h2><span class="pill">Word of the lesson</span></div>
+  <div class="g-card blue-strip word-card">
+    <div class="word-head">
+      <div><div class="word-ru">Сле́дователь</div><div class="word-en">investigator / detective</div></div>
+      <span class="word-tag">сущ. м.р.</span>
+    </div>
+    <div class="seg">
+      <div class="seg-label">Значение · Meaning</div>
+      <div class="seg-content">Человек, который официально расследует преступления.<br><em>A person who officially investigates crimes.</em></div>
+    </div>
+    <div class="seg">
+      <div class="seg-label">Фраза · Phrase</div>
+      <div class="seg-content"><strong>суде́бный сле́дователь</strong> — court investigator<br><em>«Суде́бный сле́дователь прие́хал на ме́сто преступле́ния.»</em></div>
+    </div>
+    <div class="seg">
+      <div class="seg-label">Склонение · Declension</div>
+      <div class="seg-content decl-wrap">
+        <table class="decl">
+          <thead>
+            <tr><th rowspan="2">Падеж</th><th rowspan="2">Вопрос</th><th colspan="2" style="text-align:center;border-bottom:1px solid rgba(0,180,255,.20);">Форма</th></tr>
+            <tr><th class="form-header">Ед. ч. · Singular</th><th class="form-header">Мн. ч. · Plural</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="case-ru">Именительный</span><span class="case-en-sub">Nominative</span></td><td><span class="q-words">Кто? Что?</span><span class="q-words-en">Who? What?</span></td><td class="form-cell">сле́дователь</td><td class="form-cell">сле́дователи</td></tr>
+            <tr><td><span class="case-ru">Родительный</span><span class="case-en-sub">Genitive</span></td><td><span class="q-words">Кого́? Чего́?</span><span class="q-words-en">Whose? Of what?</span></td><td class="form-cell">сле́дователя</td><td class="form-cell">сле́дователей</td></tr>
+            <tr><td><span class="case-ru">Дательный</span><span class="case-en-sub">Dative</span></td><td><span class="q-words">Кому́? Чему́?</span><span class="q-words-en">To whom? To what?</span></td><td class="form-cell">сле́дователю</td><td class="form-cell">сле́дователям</td></tr>
+            <tr><td><span class="case-ru">Винительный</span><span class="case-en-sub">Accusative</span></td><td><span class="q-words">Кого́? Что?</span><span class="q-words-en">Whom? What?</span></td><td class="form-cell">сле́дователя</td><td class="form-cell">сле́дователей</td></tr>
+            <tr><td><span class="case-ru">Творительный</span><span class="case-en-sub">Instrumental</span></td><td><span class="q-words">Кем? Чем?</span><span class="q-words-en">With whom? With what?</span></td><td class="form-cell">сле́дователем</td><td class="form-cell">сле́дователями</td></tr>
+            <tr><td><span class="case-ru">Предложный</span><span class="case-en-sub">Prepositional</span></td><td><span class="q-words">О ком? О чём?</span><span class="q-words-en">About whom?</span></td><td class="form-cell">о сле́дователе</td><td class="form-cell">о сле́дователях</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TAB 2 — ФРАЗЫ ════ -->
+<div id="phrases" class="section">
+  <div class="sec-label"><h2>Фраза урока</h2><span class="pill">Phrase of the lesson</span></div>
+  <div class="g-card yellow-strip phrase-card">
+    <div class="phrase-head">
+      <div><div class="phrase-ru">совсе́м не рад</div><div class="phrase-en">not pleased at all</div></div>
+      <span class="phrase-type">Интенсивное отрицание</span>
+    </div>
+    <div class="seg"><div class="seg-label">Объяснение · Explanation</div>
+      <div class="seg-content"><strong>совсе́м не</strong> = полное отрицание, усиливает «не».<br><em>"Совсем не" is a total negation intensifier — natural in everyday speech.</em></div></div>
+    <div class="seg"><div class="seg-label">В тексте · In the text</div>
+      <div class="seg-content"><em>«Слуга́ Полика́рп был совсе́м не рад.»</em><br>Servant Polikarp was not pleased at all.</div></div>
+    <div class="seg"><div class="seg-label">Другие примеры · More examples</div>
+      <div class="seg-content"><em>«Я совсе́м не хочу́ идти́ на рабо́ту сего́дня.»</em><br><em>«Э́тот фильм совсе́м не интере́сный.»</em></div></div>
+    <div class="seg"><div class="seg-label">Синонимы · Synonyms</div>
+      <div class="seg-content"><strong>совсе́м не</strong> ≈ <strong>вообще́ не</strong> ≈ <strong>ни ка́пли не</strong></div></div>
+  </div>
+</div>
+
+<!-- ════ TAB 3 — ЗАДАНИЯ ════ -->
+<div id="hw" class="section">
+
+  <div class="sec-label"><h2>Часть 1: Грамматика</h2><span class="pill">Grammar</span></div>
+  <!-- Topic colour = #84e3c8, matching Ответы ans-head -->
+  <div class="g-card blue-strip grammar-topic">
+    📌 <strong class="t">Тема: Винительный падеж — Кого? Что?</strong><br>
+    В тексте: <em class="ex">«прочитал письмо», «не любил графа», «вспомнил сад»</em>.<br>
+    <strong class="r">Правило:</strong> после глаголов действия → Винительный падеж.
+  </div>
+
+  <div class="g-card blue-strip ex-card">
+    <div class="ex-head"><div class="ex-num">1</div>
+      <div class="ex-title">Поставьте слово в Винительном падеже<span class="ex-en">· Put the word in Accusative</span></div></div>
+    <div class="ex-body"><ol>
+      <li>Сергей прочита́л <span class="blank"></span> (письмо́)</li>
+      <li>Полика́рп не люби́л <span class="blank"></span> (граф)</li>
+      <li>Попуга́й разбуди́л <span class="blank"></span> (сле́дователь)</li>
+      <li>Он вспо́мнил <span class="blank"></span> (сад) и <span class="blank"></span> (оранжере́я)</li>
+      <li>Серге́й уви́дел <span class="blank"></span> (челове́к)</li>
+    </ol></div>
+  </div>
+
+  <div class="g-card blue-strip ex-card">
+    <div class="ex-head"><div class="ex-num">2</div>
+      <div class="ex-title">Найдите ошибку и исправьте<span class="ex-en">· Find and correct the mistake</span></div></div>
+    <div class="ex-body"><ol>
+      <li>Он хо́чет ви́деть свой дру́г.</li>
+      <li>Я не люблю́ э́тот гра́фу.</li>
+      <li>Она́ вспо́мнила прекра́сный садо́в.</li>
+      <li>Мы чита́ем интере́сный кни́га.</li>
+      <li>Серге́й слы́шал крич попуга́я.</li>
+    </ol></div>
+  </div>
+
+  <div class="g-card blue-strip ex-card">
+    <div class="ex-head"><div class="ex-num">3</div>
+      <div class="ex-title">Составьте предложение: глагол + Винительный<span class="ex-en">· Make a sentence</span></div></div>
+    <div class="ex-body"><ol>
+      <li><strong>чита́ть</strong> → (газе́та)</li>
+      <li><strong>люби́ть</strong> → (му́зыка)</li>
+      <li><strong>ви́деть</strong> → (же́нщина)</li>
+      <li><strong>по́мнить</strong> → (э́тот день)</li>
+      <li><strong>слы́шать</strong> → (крик)</li>
+    </ol></div>
+  </div>
+
+  <!-- Часть 2: синие кружочки -->
+  <div class="sec-label" style="margin-top:1.5rem;"><h2>Часть 2: Вопросы «Да / Нет»</h2><span class="pill">Yes / No Questions</span></div>
+  <div class="q-block">
+    <div class="q-item">🔹 1. Сергей Зиновьев спал до обеда?</div>
+    <div class="q-item">🔹 2. Письмо принёс сам граф Карнеев?</div>
+    <div class="q-item">🔹 3. Граф не был в имении два года?</div>
+    <div class="q-item">🔹 4. Поликарп был рад письму от графа?</div>
+    <div class="q-item">🔹 5. В конце Сергей написал слово «нет»?</div>
+  </div>
+
+  <!-- Часть 3: синие кружочки (было 🔸 оранжевые ромбики → 🔵) -->
+  <div class="sec-label"><h2>Часть 3: Открытые вопросы</h2><span class="pill">Open Questions</span></div>
+  <div class="q-block">
+    <div class="q-item">🔵 1. Кто такой Сергей Петрович? Кем он работает?</div>
+    <div class="q-item">🔵 2. Что кричал попугай? Почему это странно?</div>
+    <div class="q-item">🔵 3. Почему Поликарп не был рад письму?</div>
+    <div class="q-item">🔵 4. Как дружба с графом повлияла на здоровье Сергея?</div>
+    <div class="q-item">🔵 5. Что вспомнил Сергей и почему не написал «нет»?</div>
+  </div>
+
+  <!-- Часть 4: жёлтые кружочки + говорящий человек вместо звёзд -->
+  <div class="sec-label"><h2>Часть 4: Обсуждение</h2><span class="pill">Discussion</span></div>
+  <div class="q-block">
+    <div class="q-item">🟡 🗣️ 1. Сергей — сильный или слабый человек? Почему?</div>
+    <div class="q-item">🟡 🗣️ 2. Нормально ли беспокоиться о человеке, которому ты служишь?</div>
+    <div class="q-item">🟡 🗣️ 3. В вашей культуре продолжают дружбу, которая вредит?</div>
+  </div>
+</div>
+
+<!-- ════ TAB 4 — ОТВЕТЫ ════ -->
+<div id="answers" class="section">
+
+  <div class="sec-label"><h2>Часть 1: Грамматика</h2><span class="pill">Grammar</span></div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Упражнение 1 — Винительный падеж</div>
+    <div class="ans-body"><ol>
+      <li><strong>письмо́</strong> <span class="ans-dim">(ср.р. → без изменений)</span></li>
+      <li><strong>гра́фа</strong> <span class="ans-dim">(м.р. одуш. → -а)</span></li>
+      <li><strong>сле́дователя</strong> <span class="ans-dim">(м.р. одуш. → -я)</span></li>
+      <li><strong>сад</strong> и <strong>оранжере́ю</strong> <span class="ans-dim">(м.р. неодуш.; ж.р. → -у)</span></li>
+      <li><strong>челове́ка</strong> <span class="ans-dim">(м.р. одуш. → -а)</span></li>
+    </ol></div>
+  </div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Упражнение 2 — Исправленные предложения</div>
+    <div class="ans-body"><ol>
+      <li>Он хо́чет ви́деть своего́ <strong>дру́га</strong>.</li>
+      <li>Я не люблю́ э́того <strong>гра́фа</strong>.</li>
+      <li>Она́ вспо́мнила прекра́сный <strong>сад</strong>.</li>
+      <li>Мы чита́ем интере́сную <strong>кни́гу</strong>.</li>
+      <li>Серге́й слы́шал <strong>крик</strong> попуга́я.</li>
+    </ol></div>
+  </div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Упражнение 3 — Примеры предложений</div>
+    <div class="ans-body"><ol>
+      <li>Я читаю <strong>газе́ту</strong>. <span class="ans-dim">(ж.р. -у)</span></li>
+      <li>Он лю́бит <strong>му́зыку</strong>. <span class="ans-dim">(ж.р. -у)</span></li>
+      <li>Мы уви́дели <strong>же́нщину</strong>. <span class="ans-dim">(ж.р. -у)</span></li>
+      <li>Я по́мню <strong>э́тот день</strong>. <span class="ans-dim">(м.р. неодуш.)</span></li>
+      <li>Она́ услы́шала <strong>крик</strong>. <span class="ans-dim">(м.р. неодуш.)</span></li>
+    </ol></div>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem;"><h2>Часть 2: Вопросы «Да / Нет»</h2><span class="pill">Yes / No Questions</span></div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Ответы</div>
+    <div class="ans-body"><ol>
+      <li><span class="ans-no">Нет</span> — он спал по́сле обеда, не до. <span class="ans-dim">(after lunch, not before)</span></li>
+      <li><span class="ans-no">Нет</span> — письмо принёс другой человек.</li>
+      <li><span class="ans-yes">Да</span> — граф не был в имении два года.</li>
+      <li><span class="ans-no">Нет</span> — Поликарп был совсем не рад.</li>
+      <li><span class="ans-no">Нет</span> — он хотел написать, но не написал.</li>
+    </ol></div>
+  </div>
+
+  <div class="sec-label"><h2>Часть 3: Открытые вопросы</h2><span class="pill">Open Questions</span></div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Ответы</div>
+    <div class="ans-body"><ol>
+      <li>Серге́й — суде́бный сле́дователь. Он расследует преступления.</li>
+      <li>Попуга́й кричал: «Муж убил свою жену!» Странно — он говорит о преступлении в доме следователя.</li>
+      <li>Поликарп знал: хозяин опять будет пить водку с графом.</li>
+      <li>За два года здоровье Сергея стало хуже из-за постоянного пьянства.</li>
+      <li>Он вспомнил красивый сад и роскошные комнаты — соблазн оказался сильнее.</li>
+    </ol></div>
+  </div>
+
+  <div class="sec-label"><h2>Часть 4: Обсуждение</h2><span class="pill">Discussion</span></div>
+  <div class="g-card ans-strip ans-card">
+    <div class="ans-head">Заметки для преподавателя</div>
+    <div class="ans-body" style="font-size:13.5px;color:var(--text-dim);line-height:1.8;">
+      Вопросы открытые — единственного правильного ответа нет. Обсуждайте вместе, опираясь на текст и личный опыт студента.<br>
+      <em>These are open-ended — encourage free expression and personal reflection.</em>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>Русский язык с Александром · Nina Andrew · А.П. Чехов «Дра́ма на охо́те» · A2</footer>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
